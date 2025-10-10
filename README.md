@@ -152,10 +152,20 @@ USE af25willa1_college_db;
 Open college_database_v2.1.mwb in MySQL Workbench to visually explore the schema.
 
 
+<a name="contributors"></a>
 ## 👨‍💻 Contributors
 
-[Williams Asante](https://github.com/kraeon20)  
-[Sara Kone](https://github.com/sadekone01)
+<p align="center">
+  <a href="https://github.com/kraeon20">
+    <img src="https://github.com/kraeon20.png" width="100px;" alt="Williams Asante"/><br />
+    <sub><b>Williams Asante</b></sub>
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/sadekone01">
+    <img src="https://github.com/sadekone01.png" width="100px;" alt="Sara Kone"/><br />
+    <sub><b>Sara Kone</b></sub>
+  </a>
+</p>
 
 ---
 
@@ -169,7 +179,6 @@ Open college_database_v2.1.mwb in MySQL Workbench to visually explore the schema
 
 **Base Project:**  
 [College Database Project – Version 1](https://github.com/Typher7/College_Database_v1)
-
 ## 📄 License
 
 This project is licensed under the MIT License.
