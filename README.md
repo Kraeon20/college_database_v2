@@ -1,115 +1,185 @@
-# 🎓 College Database Project (Version 1)
-
-This project defines a relational database schema for managing a college's academic system using **MySQL**. It includes support for students, faculty, admins, courses, departments, enrollment, grades, rooms, and semesters.
-
-Designed for use with **MySQL Workbench EER Diagrams**, this schema enforces key **relational constraints** and supports **normalized data** suitable for reporting and extensions.
+# 🎓 College Database Project (Version 2.1)
+![MySQL](https://img.shields.io/badge/Database-MySQL-blue)
+![Status](https://img.shields.io/badge/Version-2.1-success)
+![Workbench](https://img.shields.io/badge/Workbench-Compatible-orange)
 
 ---
 
-## 🗃️ Entities and Relationships
+## 🧭 Table of Contents
+- [📘 Overview](#-overview)
+- [🗂️ Key Features (v21)](#️-key-features-v21)
+- [🧱 Entities and Relationships](#-entities-and-relationships)
+- [🧮 Sample Data (v21)](#-sample-data-v21)
+- [👀 Views (v21)](#-views-v21)
+- [🧩 Files Included](#-files-included)
+- [🚀 Getting Started](#-getting-started)
+- [👨‍💻 Contributors](#-contributors)
+- [🏁 License](#-license)
+
+---
+
+## 📘 Overview
+
+**Version 2.1** is a build-up on [Version 1](https://github.com/yourusername/college_database_v1) of the College Database Project.  
+This enhanced version improves upon the original design with:
+
+- ✔️ Expanded **sample data** for testing and demonstration  
+- ✔️ Introduced **views** for simplified reporting and analysis  
+- ✔️ Improved **relational design** for more advanced queries and better normalization  
+
+This project defines a **relational database schema** for managing a college’s academic and administrative system using **MySQL**.  
+It is fully compatible with **MySQL Workbench** and includes all **DDL (schema)** and **DML (data)** scripts for easy setup, learning, and experimentation.
+
+---
+
+## 🗂️ Key Features (v2.1)
+
+| Feature | Description |
+|----------|-------------|
+| ✅ Expanded sample data | 20+ example records for students, faculty, and staff |
+| ✅ Academic structure | Departments, semesters, rooms, and courses fully populated |
+| ✅ Relationships | Faculty advising students, students enrolled in courses |
+| ✅ Views added | Simplified reporting for students, faculty, and courses |
+| ✅ Workbench support | All schemas viewable via `.mwb` file in MySQL Workbench |
+
+---
+
+## 🧱 Entities and Relationships
 
 ### 📌 Main Tables
 
-| Table             | Description |
-|------------------|-------------|
-| `People`         | Stores all individuals (students, faculty, admins) with a `role` field. |
-| `Department`     | Contains college departments (e.g., CS, Math). |
-| `Semester`       | Tracks academic terms like Fall 2025. |
-| `Course`         | Master list of courses (e.g., CS101). |
-| `Room`           | Physical rooms with capacity information. |
-| `Course_Offering`| Represents a specific course section offered in a semester, assigned to a faculty member and room. |
-| `Enrollment`     | Tracks student enrollment in course offerings, including final letter grades. |
+| Table | Description |
+|--------|-------------|
+| **people** | All individuals (students, faculty, staff) and their personal information |
+| **department** | Academic departments (e.g., CS, Math, History) |
+| **semester** | Academic terms (Fall, Spring, Summer) |
+| **room** | Building and room data including capacity |
+| **faculty** | Faculty details, office locations, and department links |
+| **student** | Student-specific info including GPA and advisors |
+| **course** | Master list of courses offered |
+| **course_offering** | Course sections per semester |
+| **enrollment** | Enrollment and grades for each student in a course section |
+| **letter_grade** | Standard grading scale (A–F, I, W) |
+| **staff** | Non-teaching personnel and their assigned roles |
 
 ---
 
-## 📋 Table Structure Summary
+## 🧮 Sample Data (v2.1)
 
-### `People`
+Version 2 includes a **sample dataset** (`sample_data_query.sql`) with realistic entries for testing and practice.
 
-- `person_id`: Primary Key
-- `first_name`, `last_name`, `email`
-- `role`: ENUM (`student`, `faculty`, `admin`)
+Included sample records:
 
-### `Department`
-
-- `department_id`: Primary Key
-- `name`: Unique
-
-### `Semester`
-
-- `semester_id`: Primary Key
-- `name`, `start_date`, `end_date`
-
-### `Course`
-
-- `course_id`: Primary Key
-- `course_code`: Unique (e.g., CS101)
-- `title`, `department_id` (FK)
-
-### `Room`
-
-- `room_id`: Primary Key
-- `building`, `room_number`, `capacity`
-
-### `Course_Offering`
-
-- `offering_id`: Primary Key
-- `course_id`, `semester_id`, `section`, `teacher_id`, `room_id`
-- Unique Constraint: (`course_id`, `semester_id`, `section`)
-
-### `Enrollment`
-
-- `enrollment_id`: Primary Key
-- `student_id`, `offering_id`, `letter_grade`
-- Unique Constraint: (`student_id`, `offering_id`)
+- 🏫 10 departments  
+- 📅 3 semesters  
+- 🏢 5 rooms  
+- 👥 20 people  
+- 👨‍🏫 5 faculty members  
+- 🎓 10 students  
+- 📚 10 courses  
+- 🧾 6 course offerings  
+- 🅰️ 11 letter grades  
+- 📝 10 enrollments  
+- 🧑‍💼 5 staff members  
 
 ---
 
-## 🔐 Constraints & Notes
+## 👀 Views (v2.1)
 
-- ✅ All foreign keys use `ON DELETE RESTRICT` by default.
-- ✅ Room capacity is enforced via a `CHECK (capacity > 0)` constraint.
-- 🔁 Only users with `role = 'faculty'` should be assigned as `teacher_id` (to be enforced via application logic or trigger).
-- 🎓 Only `role = 'student'` users can be enrolled in courses.
+To support analysis and simplify frequent queries, the following 7 **views** were added:
 
----
+| # | View Name | Description |
+|---|------------|-------------|
+| 1️⃣ | **people_summary** | Displays general information for all individuals |
+| 2️⃣ | **faculty_summary** | Lists faculty names, departments, and office locations |
+| 3️⃣ | **student_summary** | Shows students, GPA, and their assigned advisors |
+| 4️⃣ | **staff_summary** | Displays staff roles with their departments |
+| 5️⃣ | **course_summary** | Shows all courses with department names |
+| 6️⃣ | **course_offering_summary** | Lists course sections with instructor, room, and semester |
+| 7️⃣ | **enrollment_summary** | Combines students, courses, grades, and instructors |
 
-## 📂 Files
 
-| File | Description |
-|------|-------------|
-| `schema.sql` | SQL script to create the full database schema |
-| `README.md` | Project documentation |
-| `college_eer.mwb` | *(Optional)* MySQL Workbench EER diagram file (if available) |
+### 🧩 Example: `student_summary`
 
----
+```sql
+CREATE OR REPLACE VIEW student_summary AS
+SELECT 
+    s.student_id,
+    p.first_name AS student_first_name,
+    p.last_name AS student_last_name,
+    s.cumulative_gpa,
+    f.faculty_id AS advisor_id,
+    pf.first_name AS advisor_first_name,
+    pf.last_name AS advisor_last_name
+FROM student s
+JOIN people p ON s.people_id = p.people_id
+LEFT JOIN faculty f ON s.advisor_id = f.faculty_id
+LEFT JOIN people pf ON f.people_id = pf.people_id;
+```
+
+
+## 🧩 Files Included
+
+| File Name | Purpose |
+|------------|----------|
+| `schema.sql` | Creates the complete database schema |
+| `sample_data_query.sql` | Inserts all sample data |
+| `views.sql` | Contains all view creation statements |
+| `college_database_v2.1.mwb` | MySQL Workbench EER diagram |
+| `README.md` | Project documentation (this file) |
+
 
 ## 🚀 Getting Started
 
-1. Open **MySQL Workbench**
-2. Create a new schema/database
-3. Run the contents of `schema.sql`
-4. (Optional) Use `college_eer.mwb` to view or edit the EER diagram visually
+1. Open MySQL Workbench
+
+Launch MySQL Workbench on your local machine.
+
+2. Create the database
+
+```sql
+CREATE DATABASE af25willa1_college_db;
+USE af25willa1_college_db;
+```
+
+3. Run the scripts in order:  
+   - `schema.sql` – Defines tables and relationships  
+   - `sample_data_query.sql` – Adds sample data  
+   - `views.sql` – Creates the necessary views  
+   
+4. (Optional)
+
+Open college_database_v2.1.mwb in MySQL Workbench to visually explore the schema.
+
+
+<a name="contributors"></a>
+## 👨‍💻 Contributors
+
+<a href="https://github.com/kraeon20">
+  <img src="https://github.com/kraeon20.png" width="100px" style="border-radius:50%;" alt="Williams Asante"/><br/>
+  <sub><b>Williams Asante</b></sub>
+</a>
+
+<br>
+
+<a href="https://github.com/sadekone01">
+  <img src="https://github.com/sadekone01.png" width="100px" style="border-radius:50%;" alt="Sara Kone"/><br/>
+  <sub><b>Sara Kone</b></sub>
+</a>
 
 ---
 
-## 📈 Future Enhancements (Version 2+)
+## 🖇️ Links
 
-- ✅ Triggers to enforce role-based logic (e.g., only faculty teach courses)
-- ✅ Room booking constraints by time slots
-- ✅ Prerequisite relationships between courses
-- ✅ Attendance and assignment tracking
-- ✅ Stored procedures and views
+**Branches:**  
+[`version2.1_williams`](https://github.com/kraeon20/college_database_v2/tree/version2.1_williams)  
+[`version2.1_sara`](https://github.com/kraeon20/college_database_v2/tree/version2.1_sara)
 
 ---
 
-## 👥 Contributors
+**Base Project:**  
+[College Database Project – Version 1](https://github.com/Typher7/College_Database_v1)
+## 📄 License
 
-- [Enoch Atuahene](https://github.com/Typher7)
-- [William Asante](https://github.com/Kraeon20)
-
----
-
-## 💬 Feedback or Contributions?
-
-Feel free to open an issue or submit a pull request if you’d like to improve or expand this database project!
+This project is licensed under the MIT License.
+You are free to modify, use, and extend it for educational or testing purposes.
