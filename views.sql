@@ -116,3 +116,19 @@ JOIN semester s ON co.semester_id1 = s.semester_id
 JOIN faculty f ON co.faculty_id = f.faculty_id
 JOIN people pf ON f.people_id = pf.people_id
 JOIN letter_grade lg ON e.letter_grade_id = lg.letter_grade_id;
+
+
+-- =====================================================
+-- 8️⃣ Department Faculty Summary
+-- =====================================================
+CREATE OR REPLACE VIEW department_faculty_summary AS
+SELECT 
+    d.department_id,
+    d.department_name,
+    f.faculty_id,
+    p.first_name AS faculty_first_name,
+    p.last_name AS faculty_last_name,
+    f.office_location
+FROM department d
+JOIN faculty f ON d.department_id = f.department_id
+JOIN people p ON f.people_id = p.people_id;
