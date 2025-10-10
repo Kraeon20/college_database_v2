@@ -142,11 +142,11 @@ CREATE DATABASE af25willa1_college_db;
 USE af25willa1_college_db;
 ```
 
-3. Run the scripts in order:
-	a.	schema.sql – Defines tables and relationships
-	b.	sample_data_query.sql – Adds sample data
-	c.	views.sql – Creates the necessary views
-
+3. Run the scripts in order:  
+   - `schema.sql` – Defines tables and relationships  
+   - `sample_data_query.sql` – Adds sample data  
+   - `views.sql` – Creates the necessary views  
+   
 4. (Optional)
 
 Open college_database_v2.1.mwb in MySQL Workbench to visually explore the schema.
@@ -155,17 +155,17 @@ Open college_database_v2.1.mwb in MySQL Workbench to visually explore the schema
 <a name="contributors"></a>
 ## 👨‍💻 Contributors
 
-<p align="center">
-  <a href="https://github.com/kraeon20">
-    <img src="https://github.com/kraeon20.png" width="100px;" alt="Williams Asante"/><br />
-    <sub><b>Williams Asante</b></sub>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://github.com/sadekone01">
-    <img src="https://github.com/sadekone01.png" width="100px;" alt="Sara Kone"/><br />
-    <sub><b>Sara Kone</b></sub>
-  </a>
-</p>
+<a href="https://github.com/kraeon20">
+  <img src="https://github.com/kraeon20.png" width="100px" style="border-radius:50%;" alt="Williams Asante"/><br/>
+  <sub><b>Williams Asante</b></sub>
+</a>
+
+<br>
+
+<a href="https://github.com/sadekone01">
+  <img src="https://github.com/sadekone01.png" width="100px" style="border-radius:50%;" alt="Sara Kone"/><br/>
+  <sub><b>Sara Kone</b></sub>
+</a>
 
 ---
 
